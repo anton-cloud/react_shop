@@ -1,1 +1,1 @@
-# react_shop
+# BC_10: practic React/Redux
