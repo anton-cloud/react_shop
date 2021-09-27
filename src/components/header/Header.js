@@ -1,9 +1,18 @@
 import React from 'react'
-import HeaderList from './HeaderList';
+import HeaderList from './headerList/HeaderList';
+import { HeaderContainer } from './HeaderStyled';
+import sprite from '../../icons/header/sprite.svg'
 
 const Header = () => {
     return (
-        <HeaderList/>
+        <HeaderContainer>
+            <a className='headerLogo' href='#'>
+                <svg className='headerLogoIcon'>
+                    <use href={sprite + "#home"}/>
+                </svg>
+            </a>
+            <HeaderList/>
+        </HeaderContainer>
     );
 }
 
