@@ -1,15 +1,12 @@
 import React from 'react'
-import data from '../../../data';
 import Section from '../../section/Section';
 import LaptopListItem from './laptopListItem/laptopListItem';
 
-const LaptopList = () => {
+const LaptopList = ({laptops, addToCart}) => {
     return (
-        <Section title='laptops'>
         <ul className='LaptopList'>
-            {data.laptops.map((laptopItem)=><LaptopListItem laptopItem={laptopItem} key={laptopItem.id}/>)}
+            {laptops.map((laptopItem)=><LaptopListItem laptopItem={laptopItem} addToCart={addToCart} key={laptopItem.id}/>)}
         </ul>
-        </Section>
     );
 }
 
