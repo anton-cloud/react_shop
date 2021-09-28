@@ -1,7 +1,10 @@
 import React from 'react'
 
-const PhoneListItem = ({phoneItem}) => {
+const PhoneListItem = ({phoneItem, addToCart}) => {
     const {name,image,description,price, isSale} = phoneItem;
+    
+    const addProduct = () => addToCart(phoneItem);
+
     return (
     <li className='PhoneListItem'>
         <h2 className='PhoneTitle'>{name}</h2>
@@ -9,6 +12,7 @@ const PhoneListItem = ({phoneItem}) => {
         <p className='PhoneDesc'><b>Description: </b> {description}</p>
         <p className='PhonePrice'><b>Price: </b> {price}</p>
         <p className='PhoneSale'><b>Sale: </b>{isSale ? 'yes' : 'no'}</p>
+        <button type='button' onClick={addProduct}>add to cart</button>
     </li>
     );
 }
