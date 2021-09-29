@@ -3,7 +3,7 @@ import CartListItem from './cartListItem/CartListItem';
 
 const CartList = ({cart, removeFromCart, removeAllFromCart}) => {
 
-const getTotal = () => cart.reduce((acc,item) => {return acc += item.price},0)
+const getTotal = () => cart.reduce((acc,item) => {return acc += Number(item.price)},0)
 
 const makeOrder = () => {removeAllFromCart()}
 
