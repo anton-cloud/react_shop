@@ -5,17 +5,27 @@ import CartList from '../cartList/CartList';
 import Section from '../section/Section';
 import LaptopList from './laptopList/LaptopList';
 import PhoneList from './phoneList/PhoneList';
+import AdvForm from '../admin/AdvForm';
 
 class Main extends Component {
 
   state = {
     cart: [],
+    laptops: [...data.laptops],
+    phones: [...data.phones],
   };
 
   // добавление товара в корзину 
   addToCart=(product) => {
     this.setState((prev) => ({
       cart: [...prev.cart, product],
+    }))
+  }
+
+  // добавление товара по категориям
+  addProduct = (product) => {
+    this.setState((prev) => ({
+      [product.category]:[...prev[product.category], product]
     }))
   }
 
@@ -30,20 +40,24 @@ class Main extends Component {
   removeAllFromCart =() => this.setState({cart: []});
 
   render() {
-    const {cart} =this.state;
+    const {cart, phones, laptops} =this.state;
     return (
       <MainContainer>
 
-      <Section title='Cart'> 
-        {cart.length > 0 ? <CartList cart={cart} removeFromCart={this.removeFromCartByID} removeAllFromCart={this.removeAllFromCart}/> : <p>The cart is empty !</p>}
-      </Section>
+        <Section title='Cart'> 
+          {cart.length > 0 ? <CartList cart={cart} removeFromCart={this.removeAllFromCart} removeAllFromCart={this.removeAllFromCart}/> : <p>The cart is empty !</p>}
+        </Section>
+
+        <Section title='Administration'> 
+          <AdvForm addProduct={this.addProduct}/>
+        </Section>
 
         <Section title="Phones">
-          <PhoneList phones={data.phones} addToCart={this.addToCart} />
+          <PhoneList phones={phones} addToCart={this.addToCart} />
         </Section>
 
         <Section title='Laptops'>
-          <LaptopList laptops={data.laptops} addToCart={this.addToCart}/>
+          <LaptopList laptops={laptops} addToCart={this.addToCart}/>
         </Section>
       </MainContainer>
     );
