@@ -8,7 +8,9 @@ const PhoneListItem = ({phoneItem, addToCart}) => {
     return (
     <li className='PhoneListItem'>
         <h2 className='PhoneTitle'>{name}</h2>
-        <img src={image} alt={name} className='PhoneImg'/>
+        <div className = "PhoneImgWrap">
+            <img src={image} alt={name} className='PhoneImg'/>
+        </div>
         <p className='PhoneDesc'><b>Description: </b> {description}</p>
         <p className='PhonePrice'><b>Price: </b> {price}</p>
         <p className='PhoneSale'><b>Sale: </b>{isSale ? 'yes' : 'no'}</p>

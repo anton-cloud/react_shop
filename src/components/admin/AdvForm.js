@@ -47,10 +47,19 @@ class AdvForm extends Component {
     });
   }
 
+ //! (без API))
+  // onHandleSubmit = (e) => {
+  //   e.preventDefault()
+  //   this.props.addProduct({...this.state, id: uuidv4()})
+  //   this.setState({
+  //     ...initialState
+  //   })
+  // }
 
+  //!(API)
   onHandleSubmit = (e) => {
     e.preventDefault()
-    this.props.addProduct({...this.state, id: uuidv4()})
+    this.props.addProduct(this.state)
     this.setState({
       ...initialState
     })

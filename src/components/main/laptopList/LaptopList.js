@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import { getAllAdvByCategory } from '../../../services/API';
+// import { getAllAdvByCategory } from '../../../services/API';
 import LaptopListItem from './laptopListItem/laptopListItem';
+import { LaptopListStyled } from './LaptopListStyled';
 
 // class LaptopList extends Component {
 //     state = { 
@@ -29,9 +30,9 @@ import LaptopListItem from './laptopListItem/laptopListItem';
 
 const LaptopList = ({laptops, addToCart}) => {
     return (
-        <ul className='LaptopList'>
+        <LaptopListStyled>
             {laptops.map((laptopItem)=><LaptopListItem laptopItem={laptopItem} addToCart={addToCart} key={laptopItem.id}/>)}
-        </ul>
+        </LaptopListStyled>
     );
 }
 
