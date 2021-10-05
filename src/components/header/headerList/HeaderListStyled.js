@@ -6,6 +6,9 @@ export const HeaderListStyled=styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: ${({theme})=> theme.colors.text};
+  text-transform: uppercase;
+
 
 }
   
@@ -20,12 +23,11 @@ export const HeaderListStyled=styled.ul`
     align-items: center;
     flex-direction: row;
     list-style: none;
-    color: ${({theme})=> theme.colors.text};
+    
   }
 
 
   .HeaderListItem {
-    text-transform: uppercase;
 
     &:not(:last-child) {
       margin-right: 20px; 
