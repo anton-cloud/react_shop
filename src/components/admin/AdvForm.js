@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import { AdvFormStyled } from './AdvFormStyled';
 
 const categories = ['phones', 'laptops']
 
@@ -47,13 +48,27 @@ class AdvForm extends Component {
     });
   }
 
+ //! (без API))
+  // onHandleSubmit = (e) => {
+  //   e.preventDefault()
+  //   this.props.addProduct({...this.state, id: uuidv4()})
+  //   this.setState({
+  //     ...initialState
+  //   })
+  // }
 
+  //!(API)
   onHandleSubmit = (e) => {
+    const {name , image , description , price} = this.state;
     e.preventDefault()
-    this.props.addProduct({...this.state, id: uuidv4()})
-    this.setState({
-      ...initialState
-    })
+    if(name && image && description && price){
+      this.props.addProduct(this.state)
+      this.setState({
+        ...initialState
+      })
+      return
+    }
+    return alert('Fill in all the fields !');
   }
 
   render() {
@@ -61,9 +76,10 @@ class AdvForm extends Component {
     const {name, image, description, price, isSale, category} = this.state;
 
     return (
-      <form onSubmit={this.onHandleSubmit}>
-        <label>
-          Category
+      <AdvFormStyled   onSubmit={this.onHandleSubmit}>
+        <div className='AdvFormWrap'>
+        <label className='AdvFormLabel'>
+          Category:
           <select name='category' onChange={this.onHandleChange} value={category}>
             {categories.map((category)=> <option value={category} key={category}>
               {category}
@@ -71,7 +87,7 @@ class AdvForm extends Component {
           </select>
         </label>
         <label className='AdvFormLabel'>
-          Product's name
+          Product's name: 
           <input
           className='AdvFormInput'
           type='text'
@@ -92,10 +108,10 @@ class AdvForm extends Component {
           />
         </label>
 
-        <label className='AdvFormTextarea'>
+        <label className='AdvFormLabel'>
           Description
           <textarea
-          className='AdvFormInput'
+          className='AdvFormTextarea'
           type='text'
           name='description'
           value={description}
@@ -126,7 +142,8 @@ class AdvForm extends Component {
         </label>
 
         <button type='submit' onClick={this.onHandleSubmit}>Add product</button>
-      </form>
+        </div>
+      </AdvFormStyled>
     );
   }
 }
