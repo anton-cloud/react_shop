@@ -1,11 +1,8 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MainContainer } from "./MainStyled";
-import CartList from "../cartList/CartList";
-import Section from "../section/Section";
-import LaptopList from "./laptopList/LaptopList";
-import PhoneList from "./phoneList/PhoneList";
-import AdvForm from "../admin/AdvForm";
+import { Switch, Route } from "react-router-dom";
 import { createNewAdv, getProductsByCategory } from "../../services/api";
+import { mainRoutes } from "../../routes/mainRoutes";
 
 const initialState = {
   cart: [],
@@ -14,72 +11,67 @@ const initialState = {
 };
 
 const Main = () => {
-
-  const [state, setState] = useState({...initialState});
+  const [state, setState] = useState({ ...initialState });
 
   useEffect(() => {
-    getProductsByCategory('phones')
-      .then(phones => phones && setState(prev => ({...prev, phones})));
-    getProductsByCategory('laptops')
-      .then(laptops => laptops && setState(prev => ({...prev,laptops})));
-  }, [])
-  
-  const addToCart=(product) => {
-    setState(prev => ({
+    getProductsByCategory("phones").then(
+      (phones) => phones && setState((prev) => ({ ...prev, phones }))
+    );
+    getProductsByCategory("laptops").then(
+      (laptops) => laptops && setState((prev) => ({ ...prev, laptops }))
+    );
+  }, []);
+
+  const addToCart = (product) => {
+    setState((prev) => ({
       ...prev,
       cart: [...prev.cart, product],
-    }))
-  }
+    }));
+  };
 
-   const addProduct = async(product) => {
+  const addProduct = async (product) => {
     try {
-      const id = await createNewAdv(product)
+      const id = await createNewAdv(product);
       setState((prev) => ({
-       ...prev,
-      [product.category]:[...prev[product.category], {...product, id}]
-      }))
-    }
-    catch (error) {
+        ...prev,
+        [product.category]: [...prev[product.category], { ...product, id }],
+      }));
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   // удаление одного товара из корзины
-  const removeFromCartByID =(id)=> {
-    setState ((prev) => ({
-    ...prev,
-    cart:[...prev.cart.filter((product) => product.id !== id)]
-    }))
-  }
+  const removeFromCartByID = (id) => {
+    setState((prev) => ({
+      ...prev,
+      cart: [...prev.cart.filter((product) => product.id !== id)],
+    }));
+  };
 
   // удаление всех товаров из корзины
-  const removeAllFromCart = () => setState(prev => ({...prev, cart: []}));
+  const removeAllFromCart = () => setState((prev) => ({ ...prev, cart: [] }));
+
+  const methods = {
+    addToCart,
+    addProduct,
+    removeFromCartByID,
+    removeAllFromCart
+  }
 
   return (
     <MainContainer>
-      <Section title="Cart">
-        {state.cart.length > 0 ? (
-          <CartList
-            cart={state.cart}
-            removeFromCart={removeFromCartByID}
-            removeAllFromCart={removeAllFromCart}
+      <Switch>
+        {mainRoutes.map(({ path, exact, component: MyComponent }) => (
+          <Route
+            path={path}
+            exact={exact}
+            // component={component}
+            render={(props) => <MyComponent {...props} {...state} {...methods} />}
+            key={path}
           />
-        ) : (
-          <p>The cart is empty !</p>
-        )}
-      </Section>
-
-      <Section title="Administration">
-        <AdvForm addProduct={addProduct} />
-      </Section>
-
-      <Section title="Phones">
-        <PhoneList phones={state.phones} addToCart={addToCart} />
-      </Section>
-
-      <Section title="Laptops">
-        <LaptopList laptops={state.laptops} addToCart={addToCart} />
-      </Section>
+        ))}
+      </Switch>
     </MainContainer>
   );
 };

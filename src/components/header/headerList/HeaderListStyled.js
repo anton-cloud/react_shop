@@ -9,11 +9,8 @@ export const HeaderListStyled=styled.ul`
   color: ${({theme})=> theme.colors.text};
   text-transform: uppercase;
 
-
 }
   
-
-
   @media (min-width: 768px) {
     display: flex;
     text-decoration: none;
@@ -24,6 +21,15 @@ export const HeaderListStyled=styled.ul`
     flex-direction: row;
     list-style: none;
     
+  }
+
+  .HeaderListLink{
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .activeHeaderListLink{
+    color: ${({theme})=>theme.colors.active};
   }
 
 
