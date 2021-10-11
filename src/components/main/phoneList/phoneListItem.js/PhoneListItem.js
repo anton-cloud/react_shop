@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { addToCart } from '../../../../redux/cart/cartActions';
 
 const PhoneListItem = ({phoneItem, addToCart}) => {
     const {name,image,description,price, isSale} = phoneItem;
@@ -17,6 +19,7 @@ const PhoneListItem = ({phoneItem, addToCart}) => {
         <button type='button' onClick={addProduct}>add to cart</button>
     </li>
     );
+    
 }
 
-export default PhoneListItem;
+export default connect (null, {addToCart}) (PhoneListItem);

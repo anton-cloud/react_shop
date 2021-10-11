@@ -3,12 +3,16 @@ import IconButton from '../../IconButton/IconButton';
 import {ReactComponent as PlusIcon} from '../../../icons/main/plus.svg'
 import {ReactComponent as MinusIcon} from '../../../icons/main/minus.svg'
 import {ReactComponent as DeleteIcon} from '../../../icons/main/delete.svg'
+import { connect } from 'react-redux';
+import { removeFromCartByID } from '../../../redux/cart/cartActions';
 
-const CartListItem = ({product, removeFromCart}) => {
+const CartListItem = ({product, removeFromCartByID}) => {
+console.log();
   const {name, price, id} = product;
 
   const remove = () => {
-    removeFromCart(id)
+    console.log(id);
+    removeFromCartByID(id)
   }
   
   return (
@@ -28,4 +32,4 @@ const CartListItem = ({product, removeFromCart}) => {
   );
 }
 
-export default CartListItem;
+export default connect (null, {removeFromCartByID}) (CartListItem);

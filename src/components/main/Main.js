@@ -3,6 +3,9 @@ import { MainContainer } from "./MainStyled";
 import { Switch, Route } from "react-router-dom";
 import { createNewAdv, getProductsByCategory } from "../../services/api";
 import { mainRoutes } from "../../routes/mainRoutes";
+import { connect } from "react-redux";
+import {setPhones} from '../../redux/products/productsActions';
+import {setLaptops} from '../../redux/products/productsActions';
 
 const initialState = {
   cart: [],
@@ -10,17 +13,8 @@ const initialState = {
   phones: [],
 };
 
-const Main = () => {
+const Main = ({setPhones, setLaptops}) => {
   const [state, setState] = useState({ ...initialState });
-
-  useEffect(() => {
-    getProductsByCategory("phones").then(
-      (phones) => phones && setState((prev) => ({ ...prev, phones }))
-    );
-    getProductsByCategory("laptops").then(
-      (laptops) => laptops && setState((prev) => ({ ...prev, laptops }))
-    );
-  }, []);
 
   const addToCart = (product) => {
     setState((prev) => ({
@@ -56,8 +50,8 @@ const Main = () => {
     addToCart,
     addProduct,
     removeFromCartByID,
-    removeAllFromCart
-  }
+    removeAllFromCart,
+  };
 
   return (
     <MainContainer>
@@ -67,7 +61,9 @@ const Main = () => {
             path={path}
             exact={exact}
             // component={component}
-            render={(props) => <MyComponent {...props} {...state} {...methods} />}
+            render={(props) => (
+              <MyComponent {...props} {...state} {...methods} />
+            )}
             key={path}
           />
         ))}
@@ -76,7 +72,7 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default connect(null, { setPhones, setLaptops })(Main);
 
 // ======================класс===========================
 

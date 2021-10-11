@@ -1,14 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import CartList from '../components/cartList/CartList';
 import Section from '../components/section/Section';
 
-const CartPage = ({cart, removeFromCartByID, removeAllFromCart}) => {
+const CartPage = ({cart, removeAllFromCart}) => {
   return (
     <Section title="Cart">
     {cart.length > 0 ? (
       <CartList
-        cart={cart}
-        removeFromCart={removeFromCartByID}
+      cart={cart}
         removeAllFromCart={removeAllFromCart}
       />
     ) : (
@@ -18,4 +18,8 @@ const CartPage = ({cart, removeFromCartByID, removeAllFromCart}) => {
   );
 }
 
-export default CartPage;
+const mapStateToProps = (state) => ({
+  cart: state.cart.items
+})
+
+export default connect(mapStateToProps)(CartPage);

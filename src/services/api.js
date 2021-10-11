@@ -14,7 +14,9 @@ export const createNewAdv = async(product) => {
 }
 
 export const getProductsByCategory = async(category) => {
+
   try {
+    console.log(category);
     const response = await axios.get(BASE_URL + `advertisements/${category}.json`);
     if(response.data) {
       const keys = Object.keys(response.data);
