@@ -1,3 +1,5 @@
+import { createAction } from "@reduxjs/toolkit";
+
 const ADDTOCART = "addToCart";
 const REMOVEFROMCARTBYID = "removeFromCartByID";
 const CREATEORDER = "createOrder";
@@ -14,12 +16,12 @@ export {
   RESETERROR,
 };
 
-const addToCart = (product) => ({ type: ADDTOCART, payload: product });
-const removeFromCartByID = (id) => ({ type: REMOVEFROMCARTBYID, payload: id });
-const createOrder = () => ({ type: CREATEORDER });
-const setLoader = () => ({ type: SETLOADER });
-const setError = (error) => ({ type: SETERROR, payload: error });
-const resetError = () => ({ type: RESETERROR });
+const addToCart = createAction(ADDTOCART);
+const removeFromCartByID = createAction(REMOVEFROMCARTBYID);
+const createOrder = createAction(CREATEORDER);
+const setLoader = createAction(SETLOADER);
+const setError = createAction(SETERROR);
+const resetError = createAction(RESETERROR);
 
 export {
   addToCart,

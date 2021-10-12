@@ -1,45 +1,30 @@
 import { combineReducers } from "redux";
+import { createReducer } from "@reduxjs/toolkit";
 import {
-  ADDTOCART,
-  REMOVEFROMCARTBYID,
-  CREATEORDER,
-  SETERROR,
-  RESETERROR,
-  SETLOADER,
+  addToCart,
+  removeFromCartByID,
+  createOrder,
+  setLoader,
+  setError,
+  resetError,
 } from "./cartActions";
 
+const cartItemsReducer = createReducer([], {
+  [addToCart]: (state, action) => [...state, action.payload],
+  [removeFromCartByID]: (state, action) => [
+    ...state.filter((cartItem) => cartItem.id !== action.payload),
+  ],
+  [createOrder]: () => [],
+});
 
+const cartLoaderReducer = createReducer(false, {
+  [setLoader]: (state) => !state,
+});
 
-const cartItemsReducer = (state = [], action) => {
-  switch (action.type) {
-    case ADDTOCART:
-      return [...state, action.payload];
-    case REMOVEFROMCARTBYID:
-      return [...state.filter((cartItem) => cartItem.id !== action.payload)];
-    case CREATEORDER:
-      return [];
-    default:
-      return state;
-  }
-};
-const cartLoaderReducer = (state = false, action) => {
-  switch (action.type) {
-    case SETLOADER:
-      return !state;
-    default:
-      return state;
-  }
-};
-const cartErrorReducer = (state = "", action) => {
-  switch (action.type) {
-    case SETERROR:
-      return action.payload;
-    case RESETERROR:
-      return "";
-    default:
-      return state;
-  }
-};
+const cartErrorReducer = createReducer("", {
+  [setError]: (_, { payload }) => payload,
+  [resetError]: () => "",
+});
 
 const cartReducer = combineReducers({
   items: cartItemsReducer,
