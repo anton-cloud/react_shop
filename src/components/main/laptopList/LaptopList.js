@@ -1,16 +1,17 @@
 import { useEffect } from "react";
-import { getProductsByCategory } from "../../../services/api";
 import { setLaptops } from "../../../redux/products/productsActions";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LaptopListItem from "./laptopListItem/laptopListItem";
 import { LaptopListStyled } from "./LaptopListStyled";
+import { getAllAdvByCategoryOperation } from "../../../redux/products/productsOperations";
 
-const LaptopList = ({ laptops, setLaptops }) => {
+const LaptopList = () => {
+  const laptops = useSelector((state) => state.products.items.laptops);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    getProductsByCategory("laptops").then(
-      (laptops) => laptops && setLaptops(laptops)
-    );
-  }, [setLaptops]);
+    dispatch(getAllAdvByCategoryOperation("laptops", setLaptops));
+  }, [dispatch]);
   return (
     <LaptopListStyled>
       {laptops.map((laptopItem) => (
@@ -20,8 +21,4 @@ const LaptopList = ({ laptops, setLaptops }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  laptops: state.products.items.laptops,
-});
-
-export default connect(mapStateToProps, { setLaptops })(LaptopList);
+export default LaptopList;

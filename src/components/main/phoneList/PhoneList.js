@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setPhones } from "../../../redux/products/productsActions";
-import { getProductsByCategory } from "../../../services/api";
+import { getAllAdvByCategoryOperation } from "../../../redux/products/productsOperations";
 import PhoneListItem from "./phoneListItem.js/PhoneListItem";
 import { PhoneListStyled } from "./phoneListItem.js/PhoneListStyled";
 
-const PhoneList = ({ phones, setPhones }) => {
+const PhoneList = () => {
+  const phones = useSelector((state) => state.products.items.phones);
+
+  const dispatch = useDispatch();
   useEffect(() => {
-    getProductsByCategory("phones").then(
-      (phones) => phones && setPhones(phones)
-    );
-  }, [setPhones]);
+    dispatch(getAllAdvByCategoryOperation("phones", setPhones));
+  }, [dispatch]);
 
   return (
     <PhoneListStyled>
@@ -21,9 +22,4 @@ const PhoneList = ({ phones, setPhones }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  phones: state.products.items.phones,
-});
-
-
-export default connect(mapStateToProps,{setPhones})(PhoneList);
+export default PhoneList;

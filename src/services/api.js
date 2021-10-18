@@ -3,33 +3,37 @@ import axios from "axios";
 const BASE_URL = "https://react-shop-45dea-default-rtdb.firebaseio.com/";
 
 // додати позицію на FireBase
-export const createNewAdv = async(product) => {
+export const createNewAdv = async (product) => {
   try {
-    console.log('axios', product);
-    const response =  await axios.post(BASE_URL + `advertisements/${product.category}.json`, product)
-  return response.data.name;
+    console.log("axios", product);
+    const response = await axios.post(
+      BASE_URL + `advertisements/${product.category}.json`,
+      product
+    );
+    return response.data.name;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getProductsByCategory = async(category) => {
-
+export const getProductsByCategory = async (category) => {
   try {
     console.log(category);
-    const response = await axios.get(BASE_URL + `advertisements/${category}.json`);
-    if(response.data) {
+    const response = await axios.get(
+      BASE_URL + `advertisements/${category}.json`
+    );
+    if (response.data) {
       const keys = Object.keys(response.data);
       const products = keys.map((key) => ({
         id: key,
         ...response.data[key],
-      }))
-    return products;
+      }));
+      return products;
     }
   } catch (error) {
-    console.log(error);    
+    console.log(error);
   }
-}
+};
 
 // export const deleteAdv  = async(category, id) => {
 //   try {
@@ -57,4 +61,3 @@ export const getProductsByCategory = async(category) => {
 //     console.log(error);
 //   }
 // }
-
